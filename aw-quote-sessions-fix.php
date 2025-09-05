@@ -19,6 +19,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Declare HPOS compatibility - this plugin only works with quote sessions, not WooCommerce orders
+ */
+add_action( 'before_woocommerce_init', function() {
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+    }
+}, 10 );
+
 class AW_Quote_Sessions_Fix {
     
     public function __construct() {
